@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Tools")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Tools library with many useful extensions for C# language, for quick import to any solution.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Bohdan Benetskyi")]
 [assembly: AssemblyProduct("Tools")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
