@@ -25,7 +25,7 @@ namespace Tools
         {
             long result;
 
-            if (long.TryParse(ob.ToString(), out result))
+            if (long.TryParse(ob.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out result))
                 return result;
 
             return null;
@@ -35,20 +35,20 @@ namespace Tools
         {
             int result;
 
-            if (int.TryParse(ob.ToString(), out result))
+            if (int.TryParse(ob.ToString(),NumberStyles.Any, CultureInfo.InvariantCulture, out result))
                 return result;
 
             return null;
         }
 
-        public static bool ConvertDateTimeToString(ref DateTime objData, string sText)
+        public static bool TryConvertStringToDateTime(ref DateTime objData, string sText)
         {
             if (string.IsNullOrEmpty(sText)) return false;
 
             try
             {
                 objData = DateTime.Parse(sText,
-                    CultureInfo.CurrentCulture,
+                    CultureInfo.InvariantCulture,
                     DateTimeStyles.NoCurrentDateDefault);
                 return true;
             }
@@ -67,7 +67,7 @@ namespace Tools
             if (string.IsNullOrEmpty(data?.ToString())) return null;
 
             decimal ret;
-            if (decimal.TryParse(data.ToString(), out ret))
+            if (decimal.TryParse(data.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out ret))
                 return ret;
             return null;
         }
@@ -76,7 +76,7 @@ namespace Tools
         {
             double result;
 
-            if (double.TryParse(ob.ToString(), out result))
+            if (double.TryParse(ob.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out result))
                 return result;
 
             return null;
