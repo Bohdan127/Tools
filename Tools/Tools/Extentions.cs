@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -37,7 +32,7 @@ namespace Tools
             if (IsBlank(data?.ToString())) return null;
             int result;
 
-            if (int.TryParse(data.ToString().Trim(),NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            if (int.TryParse(data.ToString().Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out result))
                 return result;
 
             return null;
@@ -62,7 +57,8 @@ namespace Tools
             }
         }
 
-        public static string ConvertToStringOrNull(this object data) => data?.ToString().Length > 0 ? data.ToString() : null;
+        public static string ConvertToStringOrNull(this object data)
+            => data?.ToString().Length > 0 ? data.ToString() : null;
 
         public static decimal? ConvertToDecimalOrNull(this object data)
         {
@@ -100,6 +96,7 @@ namespace Tools
                 case DateTimeKind.Unspecified:
                     dt = new DateTime(dt.Ticks, DateTimeKind.Local);
                     break;
+
                 case DateTimeKind.Utc:
                     dt = dt.ToLocalTime();
                     break;
@@ -107,7 +104,7 @@ namespace Tools
             return XmlConvert.ToString(dt);
         }
 
-        public static DateTime ConvertStringToDateTime(string dt)   => XmlConvert.ToDateTimeOffset(dt).DateTime;
+        public static DateTime ConvertStringToDateTime(string dt) => XmlConvert.ToDateTimeOffset(dt).DateTime;
 
         public static short GetStringSimilarityInPercent(string first, string second, bool clearSpecSymbols)
         {
@@ -128,7 +125,6 @@ namespace Tools
 
             double length = first.Length < second.Length ? first.Length : second.Length;
             var sameLength = 0;
-
 
             for (int i = 0; i < first.Length; i++)
             {
@@ -151,7 +147,11 @@ namespace Tools
             if (sameLength != 0)
                 sameLength++;
 
-            return Convert.ToInt16(sameLength/length*100);
+            return Convert.ToInt16(sameLength / length * 100);
         }
+
+        public static double Round(double value, double step = .25)
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            => value % step == 0 ? value : value - value % step + step;
     }
 }
