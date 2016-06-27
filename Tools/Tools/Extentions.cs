@@ -21,7 +21,7 @@ namespace ToolsPortable
             if (IsBlank(data?.ToString())) return null;
             long result;
 
-            if (long.TryParse(data.ToString().Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            if (long.TryParse(data.ToString().Trim(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                 return result;
 
             return null;
@@ -32,7 +32,7 @@ namespace ToolsPortable
             if (IsBlank(data?.ToString())) return null;
             int result;
 
-            if (int.TryParse(data.ToString().Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            if (int.TryParse(data.ToString().Trim(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                 return result;
 
             return null;
@@ -45,7 +45,7 @@ namespace ToolsPortable
             try
             {
                 objData = DateTime.Parse(sText,
-                    CultureInfo.InvariantCulture,
+                    CultureInfo.CurrentCulture,
                     DateTimeStyles.NoCurrentDateDefault);
                 return true;
             }
@@ -65,7 +65,7 @@ namespace ToolsPortable
             if (IsBlank(data?.ToString())) return null;
 
             decimal ret;
-            if (decimal.TryParse(data.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out ret))
+            if (decimal.TryParse(data.ToString(), NumberStyles.Any, CultureInfo.CurrentCulture, out ret))
                 return ret;
             return null;
         }
@@ -75,7 +75,7 @@ namespace ToolsPortable
             if (IsBlank(data?.ToString())) return null;
             double result;
 
-            if (double.TryParse(data?.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            if (double.TryParse(data?.ToString(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                 return result;
 
             return null;
