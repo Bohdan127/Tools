@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -8,14 +9,18 @@ namespace ToolsPortable
 {
     public static class Extentions
     {
+        [Pure]
         public static bool IsNotNullOrEmpty(this string str) => !string.IsNullOrEmpty(str);
 
+        [Pure]
         public static bool IsBlank(this string str)
             => string.IsNullOrEmpty(str) || str.Cast<char>().All(char.IsWhiteSpace);
 
+        [Pure]
         public static bool IsNotBlank(this string str)
             => !string.IsNullOrEmpty(str) && str.Cast<char>().Any(ch => char.IsWhiteSpace(ch) == false);
 
+        [Pure]
         public static long? ConvertToLongOrNull(this object data)
         {
             if (IsBlank(data?.ToString())) return null;
@@ -27,6 +32,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [Pure]
         public static int? ConvertToIntOrNull(this object data)
         {
             if (IsBlank(data?.ToString())) return null;
@@ -38,6 +44,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [Pure]
         public static bool TryConvertStringToDateTime(ref DateTime objData, string sText)
         {
             if (IsBlank(sText)) return false;
@@ -57,9 +64,11 @@ namespace ToolsPortable
             }
         }
 
+        [Pure]
         public static string ConvertToStringOrNull(this object data)
             => data?.ToString().Length > 0 ? data.ToString() : null;
 
+        [Pure]
         public static decimal? ConvertToDecimalOrNull(this object data)
         {
             if (IsBlank(data?.ToString())) return null;
@@ -70,6 +79,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [Pure]
         public static double? ConvertToDoubleOrNull(this object data)
         {
             if (IsBlank(data?.ToString())) return null;
@@ -81,6 +91,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [Pure]
         public static bool ConvertToBool(this object data)
         {
             var ret = false;
@@ -89,6 +100,7 @@ namespace ToolsPortable
             return ret;
         }
 
+        [Pure]
         public static string ConvertDateTimeToString(DateTime dt)
         {
             switch (dt.Kind)
@@ -104,8 +116,10 @@ namespace ToolsPortable
             return XmlConvert.ToString(dt);
         }
 
+        [Pure]
         public static DateTime ConvertStringToDateTime(string dt) => XmlConvert.ToDateTimeOffset(dt).DateTime;
 
+        [Pure]
         public static short GetStringSimilarityInPercent(string first, string second, bool clearSpecSymbols)
         {
             if (IsBlank(first) && IsBlank(second)) return 100;
@@ -150,6 +164,7 @@ namespace ToolsPortable
             return Convert.ToInt16(sameLength / length * 100);
         }
 
+        [Pure]
         public static double Round(double value, double step = .25)
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             => value % step == 0 ? value : value - value % step + step;
