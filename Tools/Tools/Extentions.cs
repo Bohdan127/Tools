@@ -205,9 +205,10 @@ namespace ToolsPortable
         }
 
         [Pure]
-        public static short GetStringSimilarityForSportTeams(string first, string second, bool clearSpecSymbols, string dateFirst, string dateSecond)
+        public static short GetStringSimilarityForSportTeams(string first, string second, bool clearSpecSymbols, DateTime dateFirst, DateTime dateSecond)
         {
-            if (dateSecond != dateFirst)
+            if (dateSecond.Year != dateFirst.Year
+             || dateSecond.DayOfYear != dateFirst.DayOfYear)
                 return 0;
             var rgx2 = new Regex(@"U|O^[A-Za-z]?\d+");
             if ((rgx2.IsMatch(first) && !rgx2.IsMatch(second)) || (!rgx2.IsMatch(first) && rgx2.IsMatch(second)))
