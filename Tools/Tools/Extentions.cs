@@ -26,7 +26,7 @@ namespace ToolsPortable
             if (IsBlank(data?.ToString())) return null;
             long result;
 
-            if (long.TryParse(data.ToString().Trim(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
+            if (long.TryParse(data?.ToString().Trim(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                 return result;
 
             return null;
@@ -38,7 +38,7 @@ namespace ToolsPortable
             if (IsBlank(data?.ToString())) return null;
             int result;
 
-            if (int.TryParse(data.ToString().Trim(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
+            if (int.TryParse(data?.ToString().Trim(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                 return result;
 
             return null;
@@ -71,10 +71,21 @@ namespace ToolsPortable
         [Pure]
         public static decimal? ConvertToDecimalOrNull(this object data)
         {
-            if (IsBlank(data?.ToString())) return null;
+            if (IsBlank(data?.ToString()))
+                return null;
+
+            // ReSharper disable once PossibleNullReferenceException
+            var value = data.ToString();
+            value = value.Replace(",",
+               CultureInfo.CurrentUICulture.NumberFormat.PercentDecimalSeparator);
+            value = value.Replace(".",
+                CultureInfo.CurrentUICulture.NumberFormat.PercentDecimalSeparator);
 
             decimal ret;
-            if (decimal.TryParse(data.ToString(), NumberStyles.Any, CultureInfo.CurrentCulture, out ret))
+            if (decimal.TryParse(value,
+                NumberStyles.Any,
+                CultureInfo.CurrentCulture,
+                out ret))
                 return ret;
             return null;
         }
@@ -83,9 +94,16 @@ namespace ToolsPortable
         public static double? ConvertToDoubleOrNull(this object data)
         {
             if (IsBlank(data?.ToString())) return null;
-            double result;
 
-            if (double.TryParse(data?.ToString(), NumberStyles.Any, CultureInfo.CurrentCulture, out result))
+            // ReSharper disable once PossibleNullReferenceException
+            var value = data.ToString();
+            value = value.Replace(",",
+                CultureInfo.CurrentUICulture.NumberFormat.PercentDecimalSeparator);
+            value = value.Replace(".",
+                CultureInfo.CurrentUICulture.NumberFormat.PercentDecimalSeparator);
+
+            double result;
+            if (double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result))
                 return result;
 
             return null;
@@ -96,7 +114,7 @@ namespace ToolsPortable
         {
             var ret = false;
             if (IsNotBlank(data?.ToString()))
-                bool.TryParse(data.ToString(), out ret);
+                bool.TryParse(data?.ToString(), out ret);
             return ret;
         }
 
@@ -127,7 +145,7 @@ namespace ToolsPortable
 
             if (clearSpecSymbols)
             {
-                Regex rgx = new Regex("[^a-z0-9]");
+                var rgx = new Regex(@"[\%\/\\\&\?\,\'\;\:\!\-\|\.\,\@\#\(\)\s]");
                 first = rgx.Replace(first.ToLower(), "");
                 second = rgx.Replace(second.ToLower(), "");
             }
@@ -140,9 +158,9 @@ namespace ToolsPortable
             double length = first.Length < second.Length ? first.Length : second.Length;
             var sameLength = 0;
 
-            for (int i = 0; i < first.Length; i++)
+            for (var i = 0; i < first.Length; i++)
             {
-                for (int j = 0; j < second.Length; j++)
+                for (var j = 0; j < second.Length; j++)
                 {
                     if (i >= first.Length)
                         break;
