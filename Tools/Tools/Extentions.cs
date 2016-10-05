@@ -155,31 +155,67 @@ namespace ToolsPortable
                 second = second.ToLower().Trim();
             }
 
-            double length = first.Length < second.Length ? first.Length : second.Length;
+            var isFirst = first.Length < second.Length;
             var sameLength = 0;
 
-            for (var i = 0; i < first.Length; i++)
-            {
-                for (var j = 0; j < second.Length; j++)
+            if (isFirst)
+                for (var i = 0; i < first.Length; i++)
                 {
-                    if (i >= first.Length)
-                        break;
-
-                    while (first[i] == second[j])
+                    for (var j = 0; j < second.Length; j++)
                     {
-                        i++;
-                        j++;
-                        if (i >= first.Length || j >= second.Length)
+                        if (i >= first.Length)
                             break;
-                        if (first[i] == second[j])
-                            sameLength++;
+
+                        while (first[i] == second[j])
+                        {
+                            i++;
+                            j++;
+                            if (i >= first.Length || j >= second.Length)
+                                break;
+                            if (first[i] == second[j])
+                                sameLength++;
+                        }
                     }
                 }
-            }
+            else
+                for (var i = 0; i < second.Length; i++)
+                {
+                    for (var j = 0; j < first.Length; j++)
+                    {
+                        if (i >= second.Length)
+                            break;
+
+                        while (second[i] == first[j])
+                        {
+                            i++;
+                            j++;
+                            if (i >= second.Length || j >= first.Length)
+                                break;
+                            if (second[i] == first[j])
+                                sameLength++;
+                        }
+                    }
+                }
             if (sameLength != 0)
                 sameLength++;
-
+            double length = (isFirst
+                ? first.Length
+                : second.Length);
             return Convert.ToInt16(sameLength / length * 100);
+        }
+
+        [Pure]
+        public static short GetStringSimilarityForSportTeams(string first, string second, bool clearSpecSymbols, string dateFirst, string dateSecond)
+        {
+            if (dateSecond != dateFirst)
+                return 0;
+            var rgx2 = new Regex(@"U|O^[A-Za-z]?\d+");
+            if ((rgx2.IsMatch(first) && !rgx2.IsMatch(second)) || (!rgx2.IsMatch(first) && rgx2.IsMatch(second)))
+                return 0;
+
+            return GetStringSimilarityInPercent(first,
+                 second,
+                 clearSpecSymbols);
         }
 
         [Pure]
