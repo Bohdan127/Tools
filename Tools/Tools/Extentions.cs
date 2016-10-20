@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
@@ -223,5 +224,27 @@ namespace ToolsPortable
         public static double Round(double value, double step = .25)
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             => value % step == 0 ? value : value - value % step + step;
+
+        [Pure]
+        public static IList<T> CloneList<T>(this IList<T> listToClone)
+        {
+            return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
+
+        [Pure]
+        public static object Clone(this object obj)
+        {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+
+            var objIPclCloneable = obj as IPclCloneable;
+            if (objIPclCloneable != null)
+                return objIPclCloneable.Clone();
+            var objArray = obj as Array;
+            if (objArray != null)
+                return objArray.Clone();
+
+            throw new ArgumentException("Type of 'this' must have Clone method", nameof(obj));
+        }
     }
 }
