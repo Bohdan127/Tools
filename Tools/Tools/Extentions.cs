@@ -226,10 +226,9 @@ namespace ToolsPortable
             => value % step == 0 ? value : value - value % step + step;
 
         [Pure]
-        public static IList<T> CloneList<T>(this IList<T> listToClone)
-        {
-            return listToClone.Select(item => (T)item.Clone()).ToList();
-        }
+        public static IList<T> CloneIList<T>(this IList<T> listToClone) => listToClone.Select(item => (T)item.Clone()).ToList();
+
+        public static List<T> CloneIEnumerable<T>(IEnumerable<T> oldList) => new List<T>(oldList);
 
         [Pure]
         public static object Clone(this object obj)
