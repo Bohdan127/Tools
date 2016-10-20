@@ -228,7 +228,8 @@ namespace ToolsPortable
         [Pure]
         public static IList<T> CloneIList<T>(this IList<T> listToClone) => listToClone.Select(item => (T)item.Clone()).ToList();
 
-        public static List<T> CloneIEnumerable<T>(IEnumerable<T> oldList) => new List<T>(oldList);
+        [Pure]
+        public static List<T> CloneIEnumerable<T>(this IEnumerable<T> oldList) => new List<T>(oldList);
 
         [Pure]
         public static object Clone(this object obj)
