@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
@@ -10,17 +11,21 @@ namespace ToolsPortable
 {
     public static class Extentions
     {
+        [DebuggerStepThrough]
         [Pure]
         public static bool IsNotNullOrEmpty(this string str) => !string.IsNullOrEmpty(str);
 
+        [DebuggerStepThrough]
         [Pure]
         public static bool IsBlank(this string str)
             => string.IsNullOrEmpty(str) || str.Cast<char>().All(char.IsWhiteSpace);
 
+        [DebuggerStepThrough]
         [Pure]
         public static bool IsNotBlank(this string str)
             => !string.IsNullOrEmpty(str) && str.Cast<char>().Any(ch => char.IsWhiteSpace(ch) == false);
 
+        [DebuggerStepThrough]
         [Pure]
         public static long? ConvertToLongOrNull(this object data)
         {
@@ -33,6 +38,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static int? ConvertToIntOrNull(this object data)
         {
@@ -45,6 +51,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static bool TryConvertStringToDateTime(ref DateTime objData, string sText)
         {
@@ -65,10 +72,12 @@ namespace ToolsPortable
             }
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static string ConvertToStringOrNull(this object data)
             => data?.ToString().Length > 0 ? data.ToString() : null;
 
+        [DebuggerStepThrough]
         [Pure]
         public static decimal? ConvertToDecimalOrNull(this object data)
         {
@@ -91,6 +100,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static double? ConvertToDoubleOrNull(this object data)
         {
@@ -110,6 +120,7 @@ namespace ToolsPortable
             return null;
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static bool ConvertToBool(this object data)
         {
@@ -119,6 +130,7 @@ namespace ToolsPortable
             return ret;
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static string ConvertDateTimeToString(DateTime dt)
         {
@@ -135,6 +147,7 @@ namespace ToolsPortable
             return XmlConvert.ToString(dt);
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static DateTime ConvertStringToDateTime(string dt) => XmlConvert.ToDateTimeOffset(dt).DateTime;
 
@@ -220,17 +233,21 @@ namespace ToolsPortable
                  clearSpecSymbols);
         }
 
+        [DebuggerStepThrough]
         [Pure]
         public static double Round(double value, double step = .25)
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             => value % step == 0 ? value : value - value % step + step;
 
+        [DebuggerStepThrough]
         [Pure]
         public static IList<T> CloneIList<T>(this IList<T> listToClone) => listToClone.Select(item => (T)item.Clone()).ToList();
 
+        [DebuggerStepThrough]
         [Pure]
         public static List<T> CloneIEnumerable<T>(this IEnumerable<T> oldList) => new List<T>(oldList);
 
+        [DebuggerStepThrough]
         [Pure]
         public static object Clone(this object obj)
         {
