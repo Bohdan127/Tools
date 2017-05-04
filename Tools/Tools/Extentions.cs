@@ -152,6 +152,75 @@ namespace ToolsPortable
         public static DateTime ConvertStringToDateTime(string dt) => XmlConvert.ToDateTimeOffset(dt).DateTime;
 
         [Pure]
+        public static short GetStringSimilarityInPercent(string first, string second, bool clearSpecSymbols, uint lengthDiff)
+        {
+            if (IsBlank(first) && IsBlank(second)) return (short) (lengthDiff == 0 ? 100 : 0);
+            if (IsBlank(first) || IsBlank(second)) return 0;
+
+            if (clearSpecSymbols)
+            {
+                var rgx = new Regex(@"[\%\/\\\&\?\,\'\;\:\!\-\|\.\,\@\#\(\)\s]");
+                first = rgx.Replace(first.ToLower(), "");
+                second = rgx.Replace(second.ToLower(), "");
+            }
+            else
+            {
+                first = first.ToLower().Trim();
+                second = second.ToLower().Trim();
+            }
+
+            if(Math.Abs(first.Length - second.Length) > lengthDiff) return 0;
+
+            var isFirst = first.Length < second.Length;
+            var sameLength = 0;
+
+            if (isFirst)
+                for (var i = 0; i < first.Length; i++)
+                {
+                    for (var j = 0; j < second.Length; j++)
+                    {
+                        if (i >= first.Length)
+                            break;
+
+                        while (first[i] == second[j])
+                        {
+                            i++;
+                            j++;
+                            if (i >= first.Length || j >= second.Length)
+                                break;
+                            if (first[i] == second[j])
+                                sameLength++;
+                        }
+                    }
+                }
+            else
+                for (var i = 0; i < second.Length; i++)
+                {
+                    for (var j = 0; j < first.Length; j++)
+                    {
+                        if (i >= second.Length)
+                            break;
+
+                        while (second[i] == first[j])
+                        {
+                            i++;
+                            j++;
+                            if (i >= second.Length || j >= first.Length)
+                                break;
+                            if (second[i] == first[j])
+                                sameLength++;
+                        }
+                    }
+                }
+            if (sameLength != 0)
+                sameLength++;
+            double length = (isFirst
+                ? first.Length
+                : second.Length);
+            return Convert.ToInt16(sameLength / length * 100);
+        }
+
+        [Pure]
         public static short GetStringSimilarityInPercent(string first, string second, bool clearSpecSymbols)
         {
             if (IsBlank(first) && IsBlank(second)) return 100;
