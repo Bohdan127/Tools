@@ -48,6 +48,18 @@ namespace ToolsPortable
 
         [DebuggerStepThrough]
         [Pure]
+        public static IEnumerable<TInput> ForEach<TInput>(
+            this IEnumerable<TInput> enumeration, Action<TInput> action)
+            where TInput : class
+        {
+            var enumerable = enumeration as IList<TInput> ?? enumeration.ToList();
+            if (enumeration == null) return new TInput[0];
+            else foreach (TInput item in enumerable) action(item);
+            return enumerable;
+        }
+
+        [DebuggerStepThrough]
+        [Pure]
         public static IEnumerable<T> ToEnumerable<T>(this T item)
         {
             yield return item;
