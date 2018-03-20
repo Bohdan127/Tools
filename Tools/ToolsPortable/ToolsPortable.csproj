@@ -4,6 +4,20 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>ToolsPortable</AssemblyName>
     <RootNamespace>ToolsPortable</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1</Version>
+    <Authors>Bohdan Benetskyi</Authors>
+    <Product>.NET Tools Portable</Product>
+    <Copyright>Copyright ©  2018</Copyright>
+    <PackageProjectUrl>https://github.com/bbenetskyy/Tools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bbenetskyy/Tools</RepositoryUrl>
+    <RepositoryType>GitHub Source</RepositoryType>
+    <PackageTags>.Net Standard 2.0</PackageTags>
+    <PackageReleaseNotes>Move from PCL to .Net Standard 2.0;
+Added PropertyDescriptor extention;</PackageReleaseNotes>
+    <NeutralLanguage />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
