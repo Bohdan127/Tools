@@ -18,6 +18,7 @@
     <PackageReleaseNotes>Move from PCL to .Net Standard 2.0;
 Added PropertyDescriptor extention;</PackageReleaseNotes>
     <NeutralLanguage />
+    <Description>Tools library with many useful extensions for C# language, for quick import to any solution.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
