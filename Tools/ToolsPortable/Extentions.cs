@@ -168,7 +168,11 @@ namespace ToolsPortable
             }
 
             if (Math.Abs(first.Length - second.Length) > lengthDiff) return 0;
+            return GetSimilarityInPercent(first, second);
+        }
 
+        private static short GetSimilarityInPercent(string first, string second)
+        {
             var isFirst = first.Length < second.Length;
             var sameLength = 0;
 
@@ -235,54 +239,7 @@ namespace ToolsPortable
                 first = first.ToLower().Trim();
                 second = second.ToLower().Trim();
             }
-
-            var isFirst = first.Length < second.Length;
-            var sameLength = 0;
-
-            if (isFirst)
-                for (var i = 0; i < first.Length; i++)
-                {
-                    for (var j = 0; j < second.Length; j++)
-                    {
-                        if (i >= first.Length)
-                            break;
-
-                        while (first[i] == second[j])
-                        {
-                            i++;
-                            j++;
-                            if (i >= first.Length || j >= second.Length)
-                                break;
-                            if (first[i] == second[j])
-                                sameLength++;
-                        }
-                    }
-                }
-            else
-                for (var i = 0; i < second.Length; i++)
-                {
-                    for (var j = 0; j < first.Length; j++)
-                    {
-                        if (i >= second.Length)
-                            break;
-
-                        while (second[i] == first[j])
-                        {
-                            i++;
-                            j++;
-                            if (i >= second.Length || j >= first.Length)
-                                break;
-                            if (second[i] == first[j])
-                                sameLength++;
-                        }
-                    }
-                }
-            if (sameLength != 0)
-                sameLength++;
-            double length = (isFirst
-                ? first.Length
-                : second.Length);
-            return Convert.ToInt16(sameLength / length * 100);
+            return GetSimilarityInPercent(first, second);
         }
 
         [Pure]
@@ -303,8 +260,7 @@ namespace ToolsPortable
         [DebuggerStepThrough]
         [Pure]
         public static double Round(double value, double step = .25)
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            => value % step == 0 ? value : value - value % step + step;
+            => value % step == 0 ? value : value - ((value % step) + step);
 
         [DebuggerStepThrough]
         [Pure]
