@@ -177,49 +177,41 @@ namespace ToolsPortable
             var sameLength = 0;
 
             if (isFirst)
-                for (var i = 0; i < first.Length; i++)
-                {
-                    for (var j = 0; j < second.Length; j++)
-                    {
-                        if (i >= first.Length)
-                            break;
-
-                        while (first[i] == second[j])
-                        {
-                            i++;
-                            j++;
-                            if (i >= first.Length || j >= second.Length)
-                                break;
-                            if (first[i] == second[j])
-                                sameLength++;
-                        }
-                    }
-                }
+                sameLength = GetSameLength(first, second);
             else
-                for (var i = 0; i < second.Length; i++)
-                {
-                    for (var j = 0; j < first.Length; j++)
-                    {
-                        if (i >= second.Length)
-                            break;
+                sameLength = GetSameLength(second, first);
 
-                        while (second[i] == first[j])
-                        {
-                            i++;
-                            j++;
-                            if (i >= second.Length || j >= first.Length)
-                                break;
-                            if (second[i] == first[j])
-                                sameLength++;
-                        }
-                    }
-                }
             if (sameLength != 0)
                 sameLength++;
             double length = (isFirst
                 ? first.Length
                 : second.Length);
             return Convert.ToInt16(sameLength / length * 100);
+        }
+
+        private static int GetSameLength(string first, string second)
+        {
+            var sameLength = 0;
+            for (var i = 0; i < first.Length; i++)
+            {
+                for (var j = 0; j < second.Length; j++)
+                {
+                    if (i >= first.Length)
+                        break;
+
+                    while (first[i] == second[j])
+                    {
+                        i++;
+                        j++;
+                        if (i >= first.Length || j >= second.Length)
+                            break;
+                        if (first[i] == second[j])
+                            sameLength++;
+                    }
+                }
+            }
+
+            return sameLength;
         }
 
         [Pure]
